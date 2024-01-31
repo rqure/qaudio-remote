@@ -3,10 +3,7 @@ package main
 import (
 	"log"
 	"os"
-	"os/signal"
-	"strconv"
-	"strings"
-	"time"
+	"fmt"
 
 	qmq "github.com/rqure/qmq/src"
 )
@@ -18,12 +15,11 @@ func main() {
 
 	app.AddProducer("audio-remote:exchange").Initialize(10)
 
-	sigint := make(chan os.Signal, 1)
-	signal.Notify(sigint, os.Interrupt)
-
 	log.SetFlags(log.Lmicroseconds)
 
+	audioFile := os.Getenv("AUDIO_FILE")
+	app.Logger().Advise(fmt.Sprintf("Sending request to play: %s", audioFile))
 	app.Producer("audio-remote:exchange").Push(&qmq.QMQAudioRequest{
-		Filename: os.Getenv("AUDIO_FILE"),
+		Filename: audioFile,
 	})
 }
