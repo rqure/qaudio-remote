@@ -1,4 +1,5 @@
 module github.com/rqure/qaudio-remote
+
 go 1.21.6
 
 require github.com/rqure/qmq v1.0.16
