@@ -19,7 +19,7 @@ func main() {
 
 	audioFile := os.Getenv("AUDIO_FILE")
 	app.Logger().Advise(fmt.Sprintf("Sending request to play: %s", audioFile))
-	app.Producer("audio-remote:exchange").Push(&qmq.QMQAudioRequest{
+	app.Producer("audio-player:file:exchange").Push(&qmq.QMQAudioRequest{
 		Filename: audioFile,
 	})
 }
