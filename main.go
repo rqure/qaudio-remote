@@ -1,9 +1,9 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"os"
-	"fmt"
 
 	qmq "github.com/rqure/qmq/src"
 )
@@ -18,8 +18,18 @@ func main() {
 	log.SetFlags(log.Lmicroseconds)
 
 	audioFile := os.Getenv("AUDIO_FILE")
-	app.Logger().Advise(fmt.Sprintf("Sending request to play: %s", audioFile))
-	app.Producer("audio-player:file:exchange").Push(&qmq.QMQAudioRequest{
-		Filename: audioFile,
-	})
+	if audioFile != "" {
+		app.Logger().Advise(fmt.Sprintf("Sending request to play: %s", audioFile))
+		app.Producer("audio-player:file:exchange").Push(&qmq.QMQAudioRequest{
+			Filename: audioFile,
+		})
+	}
+
+	text := os.Getenv("TEXT_TO_SPEECH")
+	if text != "" {
+		app.Logger().Advise(fmt.Sprintf("Sending request to text to speech: %s", text))
+		app.Producer("audio-player:tts:exchange").Push(&qmq.QMQTextToSpeechRequest{
+			Text: text,
+		})
+	}
 }
