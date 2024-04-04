@@ -14,6 +14,7 @@ func main() {
 	defer app.Deinitialize()
 
 	app.AddProducer("audio-player:file:exchange").Initialize(10)
+	app.AddProducer("audio-player:tts:exchange").Initialize(10)
 
 	log.SetFlags(log.Lmicroseconds)
 
