@@ -3,7 +3,7 @@ module github.com/rqure/qaudio-remote
 go 1.21.6
 
 require (
-	github.com/rqure/qmq v1.1.11
+	github.com/rqure/qmq v1.1.12
 	google.golang.org/protobuf v1.33.0
 )
 
