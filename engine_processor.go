@@ -13,7 +13,7 @@ func (ep *EngineProcessor) Process(p qmq.EngineComponentProvider) {
 	audioFile := os.Getenv("AUDIO_FILE")
 	if audioFile != "" {
 		p.WithLogger().Advise(fmt.Sprintf("Sending request to play: %s", audioFile))
-		p.WithProducer("audio-player:file:exchange").Push(&qmq.AudioRequest{
+		p.WithProducer("audio-player:cmd:play-file").Push(&qmq.AudioRequest{
 			Filename: audioFile,
 		})
 	}
@@ -21,7 +21,7 @@ func (ep *EngineProcessor) Process(p qmq.EngineComponentProvider) {
 	text := os.Getenv("TEXT_TO_SPEECH")
 	if text != "" {
 		p.WithLogger().Advise(fmt.Sprintf("Sending request to text to speech: %s", text))
-		p.WithProducer("audio-player:tts:exchange").Push(&qmq.TextToSpeechRequest{
+		p.WithProducer("audio-player:cmd:play-tts").Push(&qmq.TextToSpeechRequest{
 			Text: text,
 		})
 	}
